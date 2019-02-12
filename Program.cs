@@ -37,21 +37,15 @@ namespace sacolao
             Console.WriteLine("3           -           Abacaxi         -           R$ 3,99");
             Console.WriteLine("4           -           Manga           -           R$ 4,85\n\n");
 
-            bool Result = false;
+            bool result = false;
 
-            while (!Result)
+            while (!result)
             {
                 Console.Write("Digite o código da fruta: ");
-                Result = int.TryParse(Console.ReadLine(), out idFruta);
+                result = int.TryParse(Console.ReadLine(), out idFruta);
             }
 
-            bool Result2 = false;
-            while (!Result2)
-            {
-                Console.Write("Digite a quantidade da fruta: ");
-                Result2 = int.TryParse(Console.ReadLine(), out qtdFruta);
-            }
-
+           
             /*
              1 - Tomate - R$ 4,99
              2 - Melão - R$ 2,36
@@ -75,16 +69,45 @@ namespace sacolao
                     break;
                 default:
                     Console.WriteLine("Código inválido!");
+                    escolhaFruta();
                     break;
+            }
+
+
+            bool result2 = false;
+            while (!result2)
+            {
+                Console.Write("Digite a quantidade da fruta: ");
+                result2 = int.TryParse(Console.ReadLine(), out qtdFruta);
             }
 
             // Calcula subtotal
             subtotal = subtotal + (qtdFruta * valorFruta);
 
             // Prossegue o loop?
-            Console.Write("Deseja inserir outro item? S ou N ?");
-            escolha = Convert.ToChar(Console.ReadLine().ToLower());
-            Console.WriteLine("");
+            bool result3 = false;
+            bool result4 = false;
+
+            while (!result3)
+            {
+                Console.Write("Deseja inserir outro item? S ou N? ");
+                result4 = Char.TryParse(Console.ReadLine().ToLower(), out escolha);
+
+                if (escolha !='s' && escolha !='n')
+                {
+                    result3 = false;
+                }
+                else if (escolha== 's')
+                {
+                    result3 = true;
+                    escolhaFruta();
+                }
+                else
+                {
+                    result3 = true;
+                    Console.WriteLine("");
+                }
+            }
         }
 
         static void fechaConta()
@@ -92,13 +115,13 @@ namespace sacolao
             int formaPagamento = 0;
             decimal total = 0;
 
-            bool Result3 = false;
-            bool Result4 = false;
+            bool result5 = false;
+            bool result6 = false;
 
-            while (!Result3)
+            while (!result5)
             {
                 Console.Write("Qual a forma de pagamento? 1 - À Vista  |  2 - A Prazo ");
-                Result3 = int.TryParse(Console.ReadLine(), out formaPagamento);
+                result5 = int.TryParse(Console.ReadLine(), out formaPagamento);
             }
 
 
@@ -110,21 +133,21 @@ namespace sacolao
             if (formaPagamento == 1)
             {
                 total = subtotal * 0.95m;
-                Result4 = true;
+                result6 = true;
             }
             else if (formaPagamento == 2)
             {
                 total = subtotal * 1.1m;
-                Result4 = true;
+                result6 = true;
             }
             else
             {
                 Console.WriteLine("Forma de pagamento inválida, tente novamente...");
-                Result4 = false;
+                result6 = false;
                 fechaConta();
             }
 
-            if (Result4)
+            if (result6)
             {
                 Console.Write($"O valor total é {total.ToString("C", CultureInfo.CreateSpecificCulture("pt-BR"))}");
             }
