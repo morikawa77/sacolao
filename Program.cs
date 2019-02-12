@@ -26,8 +26,8 @@ namespace sacolao
 
         static void escolhaFruta()
         {
-            int idFruta;
-            int qtdFruta;
+            int idFruta = 0;
+            int qtdFruta = 0;
             decimal valorFruta = 0;
 
             Console.WriteLine("Tabela de Preços \n\n");
@@ -37,11 +37,20 @@ namespace sacolao
             Console.WriteLine("3           -           Abacaxi         -           R$ 3,99");
             Console.WriteLine("4           -           Manga           -           R$ 4,85\n\n");
 
+            bool Result = false;
 
-            Console.Write("Digite o código da fruta: ");
-            idFruta = Convert.ToInt32(Console.ReadLine());
-            Console.Write("Digite a quantidade da fruta: ");
-            qtdFruta = Convert.ToInt32(Console.ReadLine());
+            while (!Result)
+            {
+                Console.Write("Digite o código da fruta: ");
+                Result = int.TryParse(Console.ReadLine(), out idFruta);
+            }
+
+            bool Result2 = false;
+            while (!Result2)
+            {
+                Console.Write("Digite a quantidade da fruta: ");
+                Result2 = int.TryParse(Console.ReadLine(), out qtdFruta);
+            }
 
             /*
              1 - Tomate - R$ 4,99
@@ -80,11 +89,18 @@ namespace sacolao
 
         static void fechaConta()
         {
-            int formaPagamento;
-            decimal total;
+            int formaPagamento = 0;
+            decimal total = 0;
 
-            Console.Write("Qual a forma de pagamento? 1 - À Vista  |  2 - A Prazo ");
-            formaPagamento = Convert.ToInt32(Console.ReadLine());
+            bool Result3 = false;
+            bool Result4 = false;
+
+            while (!Result3)
+            {
+                Console.Write("Qual a forma de pagamento? 1 - À Vista  |  2 - A Prazo ");
+                Result3 = int.TryParse(Console.ReadLine(), out formaPagamento);
+            }
+
 
             /*
             A vista 5% de desconto
@@ -94,14 +110,24 @@ namespace sacolao
             if (formaPagamento == 1)
             {
                 total = subtotal * 0.95m;
+                Result4 = true;
+            }
+            else if (formaPagamento == 2)
+            {
+                total = subtotal * 1.1m;
+                Result4 = true;
             }
             else
             {
-                total = subtotal * 1.1m;
+                Console.WriteLine("Forma de pagamento inválida, tente novamente...");
+                Result4 = false;
+                fechaConta();
             }
 
-            Console.Write($"O valor total é {total.ToString("C", CultureInfo.CreateSpecificCulture("pt-BR"))}");
-
+            if (Result4)
+            {
+                Console.Write($"O valor total é {total.ToString("C", CultureInfo.CreateSpecificCulture("pt-BR"))}");
+            }
         }
 
     }
